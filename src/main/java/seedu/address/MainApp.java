@@ -3,6 +3,7 @@ package seedu.address;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -25,7 +26,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
@@ -51,28 +51,43 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
-
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
-        super.init();
+        Scanner sc = new Scanner(System.in);
 
-        config = initConfig(getApplicationParameter("config"));
+        System.out.println("Enter username: ");
+        String username = sc.nextLine();
 
-        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
-        userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        if (username.equals("correctUsername")) {
+            System.out.println("Enter password: ");
+            String password = sc.nextLine();
 
-        initLogging(config);
+            if (password.equals("correctPassword")) {
+                logger.info("=============================[ Initializing AddressBook ]===========================");
+                super.init();
 
-        model = initModelManager(storage, userPrefs);
+                config = initConfig(getApplicationParameter("config"));
 
-        logic = new LogicManager(model);
+                UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+                userPrefs = initPrefs(userPrefsStorage);
+                AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+                storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
-        ui = new UiManager(logic, config, userPrefs);
+                initLogging(config);
 
-        initEventsCenter();
+                model = initModelManager(storage, userPrefs);
+
+                logic = new LogicManager(model);
+
+                ui = new UiManager(logic, config, userPrefs);
+
+                initEventsCenter();
+            } else {
+                System.out.println("Wrong password. Try again.");
+            }
+        } else {
+            System.out.println("Wrong username. Try again.");
+        }
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -88,19 +103,7 @@ public class MainApp extends Application {
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
-        try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
-            }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
-        } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
-        } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
-        }
+        initialData = new AddressBook();
 
         return new ModelManager(initialData, userPrefs);
     }
