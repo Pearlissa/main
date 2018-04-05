@@ -20,11 +20,7 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.UserPrefs;
+import seedu.address.model.*;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -40,9 +36,10 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
-
+    public static final Version VERSION = new Version(1, 3, 0, true);
+    private static boolean isTest = true;
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+    private static final String DEFAULT_FILEPATH = "data/addressbook.xml";
 
     protected Ui ui;
     protected Logic logic;
@@ -51,16 +48,21 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
-
-    @Override
     public void init() throws Exception {
+        runInitSequence(DEFAULT_FILEPATH);
+    }
+
+    /**
+     * runs the initialising sequence.
+     */
+    private void runInitSequence(String filePath) throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
-        userPrefs = initPrefs(userPrefsStorage);
+        userPrefs = initPrefs(userPrefsStorage, filePath);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
@@ -73,6 +75,8 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+
+        setIsTest(false);
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -150,21 +154,21 @@ public class MainApp extends Application {
      * or a new {@code UserPrefs} with default configuration if errors occur when
      * reading from the file.
      */
-    protected UserPrefs initPrefs(UserPrefsStorage storage) {
+    protected UserPrefs initPrefs(UserPrefsStorage storage, String filePath) {
         String prefsFilePath = storage.getUserPrefsFilePath();
         logger.info("Using prefs file : " + prefsFilePath);
 
         UserPrefs initializedPrefs;
         try {
             Optional<UserPrefs> prefsOptional = storage.readUserPrefs();
-            initializedPrefs = prefsOptional.orElse(new UserPrefs());
+            initializedPrefs = prefsOptional.orElse(new UserPrefs(filePath));
         } catch (DataConversionException e) {
             logger.warning("UserPrefs file at " + prefsFilePath + " is not in the correct format. "
                     + "Using default user prefs");
-            initializedPrefs = new UserPrefs();
+            initializedPrefs = new UserPrefs(DEFAULT_FILEPATH);
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initializedPrefs = new UserPrefs();
+            initializedPrefs = new UserPrefs(DEFAULT_FILEPATH);
         }
 
         //Update prefs file in case it was missing to begin with or there are new/unused fields
@@ -198,6 +202,10 @@ public class MainApp extends Application {
         }
         Platform.exit();
         System.exit(0);
+    }
+
+    public void setIsTest(boolean set) {
+        isTest = set;
     }
 
     @Subscribe

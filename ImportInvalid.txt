@@ -1,0 +1,19 @@
+John Doe
+98765432
+johnd@example.com
+311, Clementi Ave 2, #02-25
+owesMoney
+friends
+
+Alex Neo
+87438807
+alexyeoh@exampple.com
+Blk 30 Geylang Street 29, #06-40
+family
+
+Berinice Yu
+99272758
+berniceyu@example.com
+Blk 30 Lorong 3 Serangoon Gardens, #07-18
+colleagues
+friends

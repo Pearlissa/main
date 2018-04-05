@@ -10,11 +10,12 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
+    private String addressBookFilePath;
     private String addressBookName = "MyAddressBook";
 
-    public UserPrefs() {
+    public UserPrefs(String userFilePath) {
         this.setGuiSettings(500, 500, 0, 0);
+        setAddressBookFilePath(userFilePath);
     }
 
     public GuiSettings getGuiSettings() {

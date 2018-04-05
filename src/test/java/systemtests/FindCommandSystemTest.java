@@ -70,6 +70,11 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        /* Case: find by matriculation number in address book, 2 keywords in reversed order -> 2 persons found */
+        command = FindCommand.COMMAND_WORD + " A4234567X A2234567X";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
         /* Case: undo previous find command -> rejected */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;

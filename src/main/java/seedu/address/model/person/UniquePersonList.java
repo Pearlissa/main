@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -92,6 +93,15 @@ public class UniquePersonList implements Iterable<Person> {
             replacement.add(person);
         }
         setPersons(replacement);
+    }
+
+    /**
+     * Sorts the persons in the list lexicographically.
+     */
+    public void sortList() {
+        requireAllNonNull(internalList);
+
+        FXCollections.sort(internalList);
     }
 
     /**

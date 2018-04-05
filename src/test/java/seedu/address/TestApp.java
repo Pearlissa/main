@@ -52,6 +52,13 @@ public class TestApp extends MainApp {
     }
 
     @Override
+    public void init() throws Exception {
+        setIsTest(true);
+        super.init();
+    }
+
+
+    @Override
     protected Config initConfig(String configFilePath) {
         Config config = super.initConfig(configFilePath);
         config.setAppTitle(APP_TITLE);

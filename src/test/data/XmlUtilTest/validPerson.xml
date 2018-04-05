@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <person>
     <name>Hans Muster</name>
+    <matricNumber>A0123456I</matricNumber>
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <displayPic>/images/displayPic/default.png</displayPic>
     <tagged>friends</tagged>
 </person>

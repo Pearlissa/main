@@ -17,6 +17,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.UniqueTaskList;
 
 /**
  * Wraps all data at the address-book level
@@ -24,6 +26,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
+    private final UniqueTaskList tasks;
     private final UniquePersonList persons;
     private final UniqueTagList tags;
 
@@ -35,6 +38,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
+        tasks = new UniqueTaskList();
         persons = new UniquePersonList();
         tags = new UniqueTagList();
     }
@@ -55,6 +59,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setTasks(List<Task> tasks) {
+        this.tasks.setTasks(tasks);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -71,6 +79,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         try {
             setPersons(syncedPersonList);
+            setTasks(newData.getTaskList());
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
@@ -115,6 +124,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a task to the address book.
+     *
+     */
+    public void addTask(Task t) {
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the task list.
+        tasks.add(t);
+    }
+
+    /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
      *  list.
@@ -132,7 +152,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getMatricNumber(),
+                person.getPhone(), person.getEmail(), person.getAddress(),
+                person.getDisplayPic(), correctTagReferences);
     }
 
     /**
@@ -161,9 +183,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: refine later
     }
 
+    public ObservableList<Person> getSortedList() {
+        return persons.asObservableList();
+    }
+
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asObservableList();
+    }
+
+    public void sortList() {
+        persons.sortList();
+    }
+
+    @Override
+    public ObservableList<Task> getTaskList() {
+        return tasks.asObservableList();
     }
 
     @Override

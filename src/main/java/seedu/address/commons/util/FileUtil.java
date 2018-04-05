@@ -1,10 +1,16 @@
 package seedu.address.commons.util;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+
+import javax.imageio.ImageIO;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Writes and reads files
@@ -90,4 +96,27 @@ public class FileUtil {
         return pathWithForwardSlash.replace("/", File.separator);
     }
 
+    public static String getFileType(String filePath) throws IllegalValueException {
+        requireNonNull(filePath);
+        String trimmedFilePath = filePath.trim();
+        int lastDot = trimmedFilePath.lastIndexOf('.');
+        if (lastDot == -1) {
+            throw new IllegalValueException("THE FILE MUST HAVE A FILE EXTENSION.");
+        } else {
+            return trimmedFilePath.substring(lastDot + 1);
+        }
+    }
+
+    /**
+     *
+     */
+    public static void copyImage(BufferedImage image, String fileType, String destPath) throws IllegalValueException {
+        try {
+            File newImage = new File(destPath);
+            createIfMissing(newImage);
+            ImageIO.write(image, fileType, newImage);
+        } catch (IOException ioe) {
+            throw new IllegalValueException("IMAGE FILE COULD NOT BE COPIED.");
+        }
+    }
 }

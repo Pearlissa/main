@@ -17,30 +17,34 @@ By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+*Your TA* is for those who *prefer to use a desktop app for managing contacts*.
+More importantly, it is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). +
+If you can type fast, it can get your contact management tasks done faster than traditional GUI applications. +
+Once you're ready, jump to <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure that you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `YourTA.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your application.
+.  Double-click the file to start the application. The GUI should appear in a few seconds, as shown in Figure 1 below.
 +
-image::Ui.png[width="790"]
+.The GUI upon Starting Up.
+image::UiInitial.png[width="800"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will list all possible commands and their formats.
+.  The command box is where you type in commands followed by pressing kbd:[Enter] to execute it. +
+e.g. typing *`help`* and pressing kbd:[Enter] will open the help window for the application.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`list`* : lists all contacts.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the application.
+* **`delete`**`3` : deletes the 3rd contact shown in the current list.
+* *`exit`* : exits the application.
 
 .  Refer to <<Features>> for details of each command.
 
@@ -50,10 +54,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will list all possible commands an
 ====
 *Command Format*
 
-* There are some equivalent shortcut commands known as alias with fewer alphabetic letters or a sign e.g. to add a person to the addressbook, you can type 'add n/John Doe', 'a n/John Doe' or '+ n/John Doe'
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* There are some equivalent shortcut commands known as aliases with fewer alphabetic letters or a sign. +
+e.g. to add a person to the addressbook, you can type 'add n/John Doe', 'a n/John Doe' or '+ n/John Doe'.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user. +
+e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in square brackets are optional. +
+e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times (including zero). +
+e.g. `[t/TAG]...` can be used as `t/friend`, `t/friend t/family`, or even not used at all.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
@@ -61,32 +69,108 @@ e.g. typing *`help`* and pressing kbd:[Enter] will list all possible commands an
 
 Alias: `?` +
 Format: `help`
+[NOTE]
+This opens a help window which explains what commands can be used, and how to use them.
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to the address book. +
 Alias: `a` and `+` +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME m/MATRICULATION NUMBER p/PHONE_NUMBER e/EMAIL a/ADDRESS dp/[IMAGE PATH] [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+Both the display picture and tags fields are optional, and a person can have any number of tags (including zero).
+
+[NOTE]
+The tags "lecturer", "TA" "student" and "T1" will appear red, yellow, blue and green respectively.
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+The address book initially starts with default inputs as displayed in Figure 2:
+
+.Initial Address Book State +
+image::UiInitial.png[width="800"]
+
+Command entered: +
+`add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01`: +
+This will add a person, 'John Doe' into the list with his respective details into the application (Figure 3).
+
+.Application after John Doe has been Added +
+image::UiAfterFirst.png[width="800"]
+
+Command entered: +
+`add n/Betsy Crowe t/friend m/A1234567C e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`: +
+This will add a person, 'Betsy Crowe' into the list with her respective details into the application (Figure 4).
+
+.Application after Betsy Crowe has been added +
+image::UiAfterSecond.png[width="800"]
+
+=== Locating persons by name or by matriculation number: `find`
+
+
+Finds persons whose names contain any of the given keywords. +
+Or, finds a person whose matriculation number corresponds to the given keyword. +
+
+Alias: `f` +
+Format: `find KEYWORD [MORE_KEYWORDS]...`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Only the name and the matriculation number is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+****
+
+Examples:
+
+Address book starts with the following as shown in Figure 5:
+
+.Application before People are Added. +
+image::UiAfterSecond.png[width="800"]
+
+Command entered: +
+`find John`: +
+The application searches for the keyword 'John' and returns 1 result (Figure 6).
+
+.Returns `John Doe`. +
+image::FindJohn.png[width="800"]
+
+Command entered: +
+`find Betsy Tim John`: +
+The application searches for the keywords 'Betsy', 'Tim' and 'John' and returns 2 results (Figure 7).
+
+.Returns `John Doe` and `Betsy Crowe`. +
+image::FindBTJ.png[width="800"]
+
+Command entered: +
+`find A0111111X`: +
+The application searches for the person with the matriculation number as shown and returns 1 result (Figure 8).
+
+.Returns `John Doe`, with Matriculation Number A0111111X. +
+image::FindMatric.png[width="800"]
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the application. +
 Alias: `ls` +
 Format: `list`
+
+Example:
+
+Command entered: +
+`list`: +
+Application lists all persons who have been added up until this point (Figure 9).
+
+.All People Listed. +
+image::AllListed.png[width="800"]
+
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
 Alias: `e` +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -98,31 +182,50 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Address book starts with the following as shown in Figure 10:
 
-=== Locating persons by name: `find`
+.Application Before Edit. +
+image::AllListed.png[width="800"]
 
-Finds persons whose names contain any of the given keywords. +
-Alias: `f` +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Command entered: +
+`edit 3 p/91234567 e/johndoe@example.com`: +
+This changes the details of the person with index 3 (John Doe), in this case, his phone number and email address and writes over his original saved details (Figure 11).
+
+.Phone Number and Email of 3rd Person (John Doe) Edited. +
+image::FirstEdit.png[width="800"]
+
+Command entered: +
+`edit 4 n/Betsy Crower t/`: +
+This changed the details of the person with index 3 (originally Betsy Crowe), in this case, her name and tags. +
+Her tags are also cleared (Figure 12).
+
+.Name changed to "Betsy Crower" and All Tags Cleared. +
+image::SecondEdit.png[width="800"]
+
+=== Emailing a person : `email`
+
+Email a person in the address book. This uses your default mail app to email. +
+Format: `email INDEX`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Emails the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Command(s) entered: +
+`list` +
+Lists all people in the address book. Followed by: +
+`email 2` +
+Emails the 2nd person in the address book.
+
+Command(s) entered: +
+`find Betsy` +
+Returns Betsy as a result. Followed by: +
+`email 1` +
+Emails the 1st person in the results of the `find` command, in this case, Betsy.
 
 === Deleting a person : `delete`
 
@@ -138,12 +241,24 @@ Format: `delete INDEX`
 
 Examples:
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Address book starts with the following as shown in Figure 13:
+
+.Application before Delete. +
+image::SecondEdit.png[width="800']
+
+Command(s) entered: +
+`list`, `delete 3`: +
+The 3rd person listed in the address book is deleted (Figure 14).
+
+.3rd Person Deleted. +
+image::FirstDelete.png[width="800"]
+
+Command(s) entered: +
+`find Betsy`,`delete 1`: +
+The 1st person in the results of the `find` command is deleted, in this case, Betsy is deleted (Figure 15).
+
+.1st Person from `find` Command Deleted. +
+image::SecondDelete.png[width="800"]
 
 === Selecting a person : `select`
 
@@ -152,19 +267,31 @@ Alias: `s` +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+Address book starts with the following as shown in Figure 16:
+
+.Application before Select. +
+image::UiInitial.png[width="800"]
+
+Command(s) entered: +
+`list`, `select 1`: +
+Lists all people in address book and selects the 1st person (Figure 17).
+
+.Selects 1st Person Listed. +
+image::FirstSelect.png[width="800"]
+
+Command(s) entered: +
+`find Timothy`, `select 1`: +
+The 1st person in the results of the `find` command is selected, in this case, Timothy is selected (Figure 18).
+
+.1st Person from `find` Command Selected. +
+image::SecondSelect.png[width="800"]
 
 === Listing entered commands : `history`
 
@@ -191,19 +318,25 @@ Undoable commands: those commands that modify the address book's content (`add`,
 
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+Address book starts with the following as shown in Figure 19:
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+.Application before any Commands +
+image::UiInitial.png[width="800"]
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+Command(s) entered: +
+`delete 1`, `list`, `undo`: +
+The `delete 1` command will be reversed. +
+End result should look the same as Figure 19.
+
+Command(s) entered: +
+`select 1`, `list`, `undo`: +
+The `undo` command fails as there are no undoable commands executed previously. +
+End result should look the same as Figure 19.
+
+Command(s) entered: +
+`delete 1`, `clear`, `undo`, `undo`: +
+Both commands reversed. +
+End result should look the same as Figure 19.
 
 === Redoing the previously undone command : `redo`
 
@@ -213,27 +346,50 @@ Format: `redo`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+Address book starts with the same one in Figure 19.
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+Command(s) entered: +
+`delete 1`, `undo`, `redo`: +
+The delete command is reversed, then reapplied (Figure 20).
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+.`delete` Command Reapplied +
+image::FirstRedo.png[width="800"]
+
+Command(s) entered: +
+`delete 1`, `redo`: +
+The `redo` command fails as there are no `undo` commands executed previously. +
+End result should look the same as in Figure 19.
+
+Command(s) entered: +
+`delete 1`, `clear`, `undo`, `redo`: +
+`clear` command and `delete` command are reversed. +
+`clear` command and `delete` command are subsequently reapplied (Figure 21).
+
+.Both Commands Reversed, Reapplied. Application Cleared. +
+image::SecondRedo.png[width="800"]
 
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Alias: `c` +
 Format: `clear`
+
+=== Importing data from another file : `import`
+
+Extracting data from an xml formatted file and
+replaces the current stored data. +
+Format: `import FILEPATH`
+
+Examples:
+
+Command entered: +
+`import ~/download/NewData.xml`
+
+=== Sorting all entries : `sort` `[coming in v2.0]`
+
+Sorts all entries from the address book in alphabetical order based on name. +
+Alias: `s` +
+Format: `sort`
 
 === Exiting the program : `exit`
 
@@ -248,24 +404,66 @@ There is no need to save manually.
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
+_{Placeholder: to be revised when encryption code is added}_
 // end::dataencryption[]
+
+== Additional Information on Features
+
+This section goes more in depth for some of the features mentioned in the above chapter.
+
+=== Add Command
+
+The `add` command adds a person into the application. +
+This command have specific compulsory (must-have) and non-compulsory fields. +
+
+Compulsory fields:
+
+* Name
+* Matriculation Number
+* Phone Number
+* Email Address
+* Address
+
+Non-Compulsory field(s):
+
+* Tags
+* Display Picture
+
+Each individual field has a specific format requirement. +
+e.g the NAME field must only contain letters.
+
+If the wrong format is detected, the application will prompt you of the correct input format in the results display panel right underneath the command input line.
+
+=== Undo Command
+
+As stated in chapter 3.10, certain commands (not all) can be undone.
+
+Commands that cannot be undone:
+
+* `list`
+* `find`
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Your TA folder.
+
+*Q*: What is the calendar for? +
+*A*: The calendar is there for a task scheduling feature that is coming in v2.0 of the application.
+
+*Q*: How do i keep my information safe? +
+*A*: A login feature will be coming in v2.0.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME m/MATRICULATION_NUMBER p/PHONE_NUMBER e/EMAIL a/ADDRESS dp/DISPLAY_PICTURE [t/TAG]...` +
+e.g. `add n/James Ho m/A2345678J p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [m/MATRICULATION_NUMBER] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [dp/DISPLAY_PICTURE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `find KEYWORD [MORE_KEYWORDS]...` +
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`

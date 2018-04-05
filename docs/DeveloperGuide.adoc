@@ -14,9 +14,36 @@ endif::[]
 
 By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+Your TA is an address book application designed to amplify the capabilities of a university teaching assistant or tutor.
+It aims to provide all the essential functions needed to manage the administrative duties of handling a class as well as
+to aid the tutor to better connect with the class. It includes a calendar, scheduling capabilities, as well as the ability to mark
+attendance and participation as well.
+
+== How to contribute to Your TA?
+
+=== New Developers
+
+You may wish to refer to the <<Setting up, setting up>> portion
+to set up the Your TA project file.
+
+Read through the rest of the guide to familiarise yourself with how Your TA components functions together.
+
+Try making some enhancements or edits to a component and make a Pull Request (PR) to our repo! We will take a look at your PR and
+give you some feedback or even merge your code if it's great.
+
+=== Experienced Developers
+
+The Developer Guide contains the design of the models that make up the program. Each section also details how each and every functionality
+is implemented and how it interacts with the different models. We would greatly appreciate your help in fine-tuning the components and also
+welcome any suggestions or feedback to improve Your TA.
+
 == Setting up
 
 === Prerequisites
+
+The following are essential programs and libraries needed to start developing Your TA.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -31,27 +58,40 @@ This app will not work with earlier versions of Java 8.
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
+. Sufficient *Java* and *Javafx* knowledge
++
+[NOTE]
+This application is written in Java and Javafx. A good amount of experience with the language (about 10k lines of code written in *Java* and *Javafx*) is required to understand and work in the application.
+
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+Please follow the steps below to download and set up the project.
+
+. Fork this repository, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+Run the following steps to ensure that you successfully set up the project.
+
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
+You should see in the console that all the tests have successfully completed.
+
 === Configurations to do before writing code
+
+The following configurations should be set up before you start coding to ensure a uniform coding style.
 
 ==== Configuring the coding style
 
@@ -68,7 +108,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-F09-B1/main` repository. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-F09-B1/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -93,6 +133,8 @@ When you are ready to start coding,
 
 == Design
 
+This section will present to you the high-level design view of Your TA.
+
 [[Design-Architecture]]
 === Architecture
 
@@ -104,24 +146,25 @@ The *_Architecture Diagram_* given above explains the high-level design of the A
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* Initializes the components in the correct sequence at the app launch, and connects them up with each other.
+* Shutting down the components and invokes cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of five components.
 
+* <<Design-Login, *`Login`*>>: Authenticates access to App.
 * <<Design-Ui,*`UI`*>>: The UI of the App.
 * <<Design-Logic,*`Logic`*>>: The command executor.
 * <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the last four components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -152,6 +195,18 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
+[[Design-Login]]
+=== Login Component
+.Interactions for Login Component
+image::Login.png[width="800"]
+
+Upon launching the app, the Login component takes in two inputs from the user: `Username` and `Password`, then stores the user's login credentials into a `.xml` file.
+[Optional] `.xml` file is encrypted.
+
+* The login credentials are therefore immutable (cannot be changed).
+* The same username and password have to be used every time the user wishes to access the app.
+* Only upon successful authentication will the app load data from the `Storage` Component.
+
 [[Design-Ui]]
 === UI component
 
@@ -160,24 +215,39 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `TodoListPanel`, `StatusBarFooter`, `CalendarView` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+
+
+.Layout of the UI
+image::UiLayout.png[width="800"]
+
+As seen above is the current layout of the UI.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
+The `UI` component loads the layout of each part from the `.fxml` file and then does the bindings to various variables in the address book model in the corresponding `.java` file.
+
+[NOTE]
+It may be difficult to edit the `.fxml` file directly. *Javafx* http://gluonhq.com/products/scene-builder/[Scene Builder] is recommended to be used to edit or create new `.fxml` files.
+
+The `UI` component:
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+
 [[Design-Logic]]
 === Logic component
+
+The diagram below shows how the `LogicManager` functions in the application.
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+The diagram below shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+
 image::LogicCommandClassDiagram.png[width="800"]
 
 *API* :
@@ -196,17 +266,42 @@ image::DeletePersonSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model component
 
+The diagram below shows the different components and interfaces that make up the `Model` component.
+
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model`:
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the Address Book data.
+* Exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* Does not depend on any of the other three components.
+
+The `Person` Class:
+
+* Stores the information of a specific person (student) in the AddressBook
+* Information includes: Name, Matriculation Number, Phone Number, Email, Address and different tags to associate with that person.
+* Implements `UniquePersonList` that enforces uniqueness of its elements and disallows nulls.
+* `Name`: Object that stores the name of the `Person` Object.
+[NOTE]
+Person's name should only contain alphanumeric characters, and should not be null.
+* `Matriculation Number`: Object that stores the matriculation number of the `Person` Object.
+[NOTE]
+Matriculation number should start with either 'A' or 'U', followed by 7 digits and ending with an alphabet (A-Z).
+* `Phone Number`: Object that stores the phone number of the `Person` Object.
+* `Email`: Object that stores the email address of the `Person` Object.
+[NOTE]
+Email address should be of the format _local-part@domain_.
+
+The `Tag` Class,
+
+* An immutable object that has to be valid.
+* Checks are implemented to guarantee validity.
+[TIP]
+For every `Person` object, there can be multiple (or zero) tags.
 
 [[Design-Storage]]
 === Storage component
@@ -216,7 +311,7 @@ image::StorageClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component:
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
@@ -233,9 +328,7 @@ This section describes some noteworthy details on how certain features are imple
 === Help feature
 ==== Current Implementation
 
-The help command displays a list of all the possible commands the user can make, followed by an example on its use.
-
-[This section is to be expanded when the help command is reworked into the help window.]
+The help command opens a new window, opening the user guide.
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -295,7 +388,8 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`.
+It would then proceed to restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -366,18 +460,92 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== [Proposed] Data Encryption (Coming in v2.0)
 
 _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+=== Email (Since v1.1)
+
+This feature allows the user to call their desktop mail application from the application itself, with the mailTo: field already populated with the user input.
+
+==== Current implementation
+
+image::EmailComponentFlow.png[width="800"]
+pass:[<div align="center"><b>Figure 3.3.1: Email Implementation</b></div>]
+
+The user will enter a command `email 1` to the application. The application will then rely on `AddressBookparser` and `EmailCommandParser` to
+parse the argument. The argument will be passed into the EmailCommand when it will be checked on whether the argument is valid. From there, it will
+call the Java `Desktop` class to launch the user's default mail application.
+
+==== Design Considerations
+
+===== Aspect: How the email is sent
+
+* **Alternative 1 (current choice):** Use the Java `Desktop` class to open the default mail app
+** Pros: It is fast and works with supported Desktop and OS.
+** Cons: Does not work on systems wihtout a default Desktop mail application.
+* **Alternative 2:** Use the in-built browser
+** Pros: Higher level of compatibility, means it can be used with a wider range of operating systems.
+** Cons: Clunky as users may use different web mail services. The API would also differ based on the email they use as well.
+
+==== Future enhancements (Coming in v1.3)
+
+Support for writing the subject title in the application as well by adding an extra parameter such as `email 1 s/ [SUBJECT]`.
+
+=== Display Picture (Since v1.2)
+
+This feature allows the user to enter a path to their selected image file and copies the image into the `images\displayPic` folder. This image
+will be shown in the application next to the details of the person.
+
+==== Current implementation
+
+The application will take in the argument through `dp/ [PATH TO IMAGE]`. If this is empty, the application will default to using the default profile picture
+which is in `src\resources\images\displayPic`. If an valid path to an image is provided, the image will be processed and copied over to the `data` folder where the
+`addressbook.xml` is stored as well.
+
+The image copied over will be stored with a SHA-256 hash name. This hash is calculated over the `Person` object's details to ensure a unique filename.
+The `DisplayPic` object will store the relative filepath to this new duplicated image. If there is no image or a valid filepath, the `DisplayPic` object will contain the
+relative filepath to the default display picture.
+
+===== Editing a Display Picture
+
+The application will read in the new image to edit and use the `filepath` of the original image to generate a new unique hash name. This is to prevent the overwriting
+of image files such as to facilitate the `undo` command.
+
+===== Deleting a Display Picture
+
+The current delete uses Java's `deleteOnExit` method. It will be updated later on in v1.4 to ensure that files are only deleted when they will definitely not be used.
+
+==== Design Considerations
+===== Aspect: Filepath to the image
+* **Alternative 1 (current choice):** Copy the image file over to a designated location
+** Pros: The user does not need to maintain the image file, as the application does so itself.
+** Cons: User has to delete the original file if not there will be 2 of the same files on the user's storage.
+* **Alternative 2:** Use the location of the file the user put in
+** Pros: Potentially less space utilized.
+** Cons: User needs to ensure the file is not moved or deleted.
+
+===== Aspect: Filename of the image
+* **Alternative 1 (current choice):** Use a hashing algorithm to name the file.
+** Pros: SHA-256 provides collision resistant which means the filename would be unique and it is easy to implement.
+** Cons: It is difficult to manually check which `Person` the image file belongs to.
+* **Alternative 2:** Use the name of the `Person` to name the file.
+** Pros: Image files can be easily identified separately and easy to implement.
+** Cons: Could lead to potential image files overwriting each other without additional checks.
+
+==== Future enhancements
+
+* Support for photo frames and undo for delete (Coming in v1.4)
+* Support for frame color to highlight student status (Coming in v1.5)
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* The logging level can be controlled using the `logLevel` setting in the configuration file. (See <<Implementation-Configuration>>)
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
 * Currently log messages are output through: `Console` and to a `.log` file.
 
 *Logging Levels*
@@ -410,13 +578,13 @@ See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to dep
 
 === Converting Documentation to PDF format
 
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+Use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
 Here are the steps to convert the project documentation files to PDF format.
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
-.  Within Chrome, click on the `Print` option in Chrome's menu.
+.  Click on the `Print` option in Chrome's menu.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 .Saving documentation as PDF files in Chrome
@@ -439,10 +607,10 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* To run the tests, You need to open a console or terminal and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
 
 [NOTE]
-See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+Detailed information on how to run tests using Gradle is specified in <<UsingGradle#, UsingGradle.adoc>>.
 
 *Method 3: Using Gradle (headless)*
 
@@ -456,13 +624,13 @@ We have two types of tests:
 
 .  *GUI Tests* - These are tests involving the GUI. They include,
 .. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
+.. _Unit Tests_ that test the individual components. These are in `seedu.address.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
-..  _Unit tests_ targeting the lowest level methods/classes. +
+..  _Unit Tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
+..  _Integration Tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
 e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
+..  Hybrids of Unit and Integration Tests. These test are checking multiple code units as well as how the are connected together. +
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
@@ -476,18 +644,21 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 === Build Automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for Build Automation.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects.
+See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Coverage Reporting
 
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
+We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
+See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
 === Documentation Previews
-When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
+When there are changes to asciidoc files in a pull request, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. +
+See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
 === Making a Release
 
@@ -504,286 +675,6 @@ A project often depends on third-party libraries. For example, Address Book depe
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
-[[GetStartedProgramming]]
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
 [appendix]
 == Product Scope
 
@@ -797,6 +688,77 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app, includes to-do
     list features (with prioritization, etc.) and scheduling (with calendar and reminders)
+
+=== Feature contribution
+
+*Wu Di*
+
+* *Major*: Implement the todo list
+
+** Support adding, editing and deleting of tasks
+** Works with undo/redo functions
+
+This enables the tutor to view all tasks in one glance so that he/she is able to stay organized and productive.
+
+* *Minor*: Import feature to migrate data from an external file
+
+** Imports data anywhere in any OS
+
+This helps the tutor work on different devices with the unique data set.
+
+* *Minor*: add the alias feature to some of the commands
+
+** Support majority of commands
+
+This helps the tutor remember the commands intuitively and type them more efficiently.
+
+*Daniel*
+
+* *Major*: Calendar and Scheduler for user
+
+** Supports adding of new tasks that will be slotted into the calendar(if it has a deadline)
+** Also assigns a priority value to each task based on parameters keyed in when task is added
+
+This helps the tutor to keep track of what needs to be done and which task to focus on.
+
+* *Minor*: Person has new parameter - Matriculation number
+
+** Person now stores matriculation number of the person
+** Add command supports adding person with matriculation number(compulsory parameter)
+** Find command supports search by matriculation number
+
+This helps the tutor to easily search for a certain student by their unique matriculation number instead of just
+their names (e.g. easier than searching for a common name such as Daniel).
+
+*Pearlissa*
+
+* *Major*: Login feature
+
+** Implements new User package
+** [Not confirmed] Encryption of data files containing usernames and passwords
+
+This allows multiple tutors to store their data in separate accounts, which can only be accessed by them.
+
+* *Minor*: Sorting of contacts based on selected parameters
+
+** Any number of parameters (at least 1), and in order of priority
+
+This allows tutors to be better able to go through their lists of students.
+
+*Ellery*
+
+* *Major*: Display picture for all students entered
+
+** Support adding, editing and deleting of picture
+** Also works with the redo/undo function
+
+This helps the tutor keep track of his students, and be able to easily remember them better.
+
+* *Minor*: Email feature to email students
+
+** Email multiple students quickly
+
+This helps the tutor to quickly bring up an email client to send an email to a student.
 
 [appendix]
 == User Stories
@@ -844,8 +806,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user with many persons in the address book |combine groups/tags |better work with people who have similar interests/work
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
@@ -956,8 +916,6 @@ Use case resumes at step 3.
 +
 User case resumes at step 5.
 
-_{More to be added}_
-
 [appendix]
 == Non Functional Requirements
 
@@ -969,8 +927,6 @@ _{More to be added}_
 .  Should respond to any requests within 3 seconds.
 .  Should not modify and copy any user's personal data on the computer.
 .  A User's data should be password protected.
-
-_{More to be added}_
 
 [appendix]
 == Glossary
@@ -1006,8 +962,12 @@ A command to be executed
 [[deadline]] Deadline::
 The date for which certain tasks are due to be done
 
+[[sha-256]] SHA-256::
+A cryptographic hash that is akin to a 'signature' for a text or a data file.
+SHA-256 generates an almost-unique 256-bit (32-byte) signature for a text.
+
 [[tags]] Tags::
-Keywords tied to categories og people
+Keywords tied to categories or people
 
 [[to-do-list]]To-do list::
 A list of things to do
@@ -1015,8 +975,6 @@ A list of things to do
 [[import]] Import::
 Bring into the application from an external source
 
-User -
- Developer -
 
 [appendix]
 == Product Survey

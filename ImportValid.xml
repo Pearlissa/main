@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>John Doe</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Alex Neo</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@exampple.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Berinice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>owesMoney</tags>
+    <tags>friends</tags>
+    <tags>family</tags>
+    <tags>colleagues</tags>
+</addressbook>

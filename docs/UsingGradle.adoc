@@ -1,4 +1,4 @@
-= Using Gradle
+ = Using Gradle
 :imagesDir: images
 :stylesDir: stylesheets
 :experimental:

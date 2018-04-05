@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox prefHeight="300.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="100.0" prefWidth="600.0" text="Welcome!" textAlignment="CENTER">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <HBox prefHeight="50.0" prefWidth="600.0">
+                    <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="250.0" text="Username:" textAlignment="CENTER" />
+                        <TextField fx:id="username" promptText="username">
+                            <HBox.margin>
+                                <Insets left="5.0" top="14.0" />
+                            </HBox.margin>
+                        </TextField>
+                    </children>
+                </HBox>
+                <HBox prefHeight="70.0" prefWidth="200.0">
+                    <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="250.0" text="Password:" textAlignment="CENTER" />
+                        <PasswordField fx:id="password" promptText="password">
+                            <HBox.margin>
+                                <Insets left="5.0" top="23.0" />
+                            </HBox.margin>
+                        </PasswordField>
+                    </children>
+                </HBox>
+                <HBox prefHeight="80.0" prefWidth="200.0">
+                    <children>
+                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleCommandInputChanged" text="Login">
+                            <HBox.margin>
+                                <Insets left="440.0" top="20.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</Pane>
