@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!-- @@author Pearlissa -->
-<addressbooks>
+<addressbook>
     <!-- Person with invalid email field -->
     <users>
         <username>John Doe</username>
         <password isPrivate="true">password</password>
     </users>
-</addressbooks>
+</addressbook>
