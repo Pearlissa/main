@@ -5,7 +5,6 @@
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
  */
 public class SortCommandTest {
-
     private Model model;
     private Model expectedModel;
     private SortCommand sortCommand;
